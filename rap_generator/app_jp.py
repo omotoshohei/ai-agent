@@ -17,24 +17,24 @@ except ImportError:
 
 
 PROMPT = """
-1. Task: Generate a unique motivational or reflective quote that relates directly to the user's reported feeling and plan for the day. 
-1-1.Ensure the quote is relevant and offers either support or inspiration based on the specific emotional context provided. 
-1-2.Avoid repeating any quotes, and do not use quotes by Steve Jobs. 
-1-3.Seek out lesser-known quotes and consider a diverse range of cultural and historical sources to enrich the variety and inclusiveness of the selections. 
-Provide a brief explanation of why the chosen quote fits the situation described by the user.
-
-2.Feeling: {feeling}.
-3.Reason for the feeling: {reason}.
-4.Plan for the day: {plan}.
-5. Explain within 100 words in English.
+以下の構造に厳密に従ってラップを生成してください。完全性と一貫性を確保します：
+- 長さ: 正確に8行で、各行に8拍子。
+- 韻の構造: ABABの韻の構造を通じてリズミカルで詩的な流れを維持してください。
+- 内容: 与えられたトピック、職業、個人的なメッセージを歌詞に反映させてください。テーマの紹介で始め、アイデアを発展させる本文で続き、強いエンディングで結ぶ。
+- スタイル: 内韻と多音節の韻を組み込んで歌詞の複雑さを高めてください。
+- トーン: 個人的なメッセージの感情に合わせてトーンを調整してください。入力に応じてモチベーショナルから省察的までの範囲です。
+各行が次の行にスムーズに移行し、テーマとリズムの連続性を維持してください。8行全部で完全なナラティブアークを提供する必要があります。
+- トピック:{topic},
+- 職業:{occupation},
+- 個人的なメッセージ:{message}
 """
 
 def init_page():
     st.set_page_config(
-        page_title="Word of the Day AI Agent",
-        page_icon="🧘"
+        page_title="ラップ自動生成AIエージェント",
+        page_icon="🎶"
     )
-    st.header("Word of the Day AI Agent🧘")
+    st.header("ラップ自動生成AIエージェント 🎶")
 
 
 def select_model(temperature=0):
@@ -62,15 +62,11 @@ def main():
     init_page()
     chain = init_chain()
     if chain:
-        feeling = st.selectbox(
-            "How are you feeling today?",
-            ("I want to be more motivated", "I'm feeling sad", "I'm angry", "I just want to relax today", "I feel excited", "I'm feeling anxious"),
-            key="feeling"
-        )
-        reason = st.text_input("What's the reason for this feeling?", key="reason")
-        plan = st.text_input("What's your plan for today?", key="plan")
-        if st.button("Submit"):
-            result = chain.stream({"feeling": feeling, "reason": reason, "plan": plan})
+        topic = st.text_input("トピック（例：日曜日）", key="topic")
+        occupation = st.text_input("あなたの職業（例：データサイエンティスト）", key="occupation")
+        message = st.text_input("伝えたいこと（例：明日に備える）", key="message")
+        if st.button("返信を生成する"):
+            result = chain.stream({"topic": topic, "occupation": occupation, "message": message})
             st.write(result)   
       
 

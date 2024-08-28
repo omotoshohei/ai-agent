@@ -34,10 +34,10 @@ PROMPT = """
 
 def init_page():
     st.set_page_config(
-        page_title="Career Advice Tool",
+        page_title="Career Advice AI Agent",
         page_icon="🧘"
     )
-    st.header("Career Advice Tool🧘")
+    st.header("Career Advice AI Agent🧘")
 
 
 def select_model(temperature=0):

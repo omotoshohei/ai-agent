@@ -32,10 +32,10 @@ PROMPT = """
 
 def init_page():
     st.set_page_config(
-        page_title="今日の一言",
+        page_title="今日の一言AIエージェント",
         page_icon="🧘"
     )
-    st.header("今日の一言🧘")
+    st.header("今日の一言AIエージェント🧘")
 
 
 def select_model(temperature=0):

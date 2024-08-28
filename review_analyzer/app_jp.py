@@ -17,24 +17,21 @@ except ImportError:
 
 
 PROMPT = """
-1. Task: Generate a unique motivational or reflective quote that relates directly to the user's reported feeling and plan for the day. 
-1-1.Ensure the quote is relevant and offers either support or inspiration based on the specific emotional context provided. 
-1-2.Avoid repeating any quotes, and do not use quotes by Steve Jobs. 
-1-3.Seek out lesser-known quotes and consider a diverse range of cultural and historical sources to enrich the variety and inclusiveness of the selections. 
-Provide a brief explanation of why the chosen quote fits the situation described by the user.
-
-2.Feeling: {feeling}.
-3.Reason for the feeling: {reason}.
-4.Plan for the day: {plan}.
-5. Explain within 100 words in English.
+## 課題: 当社の製品「レビューアナライザー」の顧客レビューを分析します。購入を検討している可能性のある顧客に役立つ重要なポイントを抽出することに焦点を当ててください。全体的な顧客満足度を判断するために感情分析を含めます。
+## レビューサイト: Facebook、Instagram、その他の製品の市場存在に基づいた関連フォーラムからレビューを収集してください。
+## 目的: 現在のユーザーが製品についてどう思っているかについて、潜在的な顧客に明確で簡潔な要約を提供することです。最も称賛されている機能、一般的な問題、および一般的な感情を強調してください。
+## 追加: レビューの出典と分析した投稿数を示しながら、約200語で分析を要約します。要約は直截的で理解しやすく、購入決定を支援するために調整されていることを確認してください。
+- ブランド: {brand},
+- 製品:{product},
+- 地域: {region}
 """
 
 def init_page():
     st.set_page_config(
-        page_title="Word of the Day AI Agent",
-        page_icon="🧘"
+        page_title="商品レビュー確認AIエージェント",
+        page_icon="🔍"
     )
-    st.header("Word of the Day AI Agent🧘")
+    st.header("商品レビュー確認AIエージェント🔍")
 
 
 def select_model(temperature=0):
@@ -62,15 +59,11 @@ def main():
     init_page()
     chain = init_chain()
     if chain:
-        feeling = st.selectbox(
-            "How are you feeling today?",
-            ("I want to be more motivated", "I'm feeling sad", "I'm angry", "I just want to relax today", "I feel excited", "I'm feeling anxious"),
-            key="feeling"
-        )
-        reason = st.text_input("What's the reason for this feeling?", key="reason")
-        plan = st.text_input("What's your plan for today?", key="plan")
+        brand = st.text_input("ブランド名を入力してください（例：ナイキ）", key="brand")
+        product = st.text_input("製品名を入力してください（例：エアフォースワンシューズ）", key="product")
+        region = st.text_input("地域を入力してください（例：アメリカ）", key="region", value="USA")
         if st.button("Submit"):
-            result = chain.stream({"feeling": feeling, "reason": reason, "plan": plan})
+            result = chain.stream({"brand": brand, "product": product, "region": region})
             st.write(result)   
       
 

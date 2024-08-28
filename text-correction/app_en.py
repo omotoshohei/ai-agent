@@ -17,24 +17,17 @@ except ImportError:
 
 
 PROMPT = """
-1. Task: Generate a unique motivational or reflective quote that relates directly to the user's reported feeling and plan for the day. 
-1-1.Ensure the quote is relevant and offers either support or inspiration based on the specific emotional context provided. 
-1-2.Avoid repeating any quotes, and do not use quotes by Steve Jobs. 
-1-3.Seek out lesser-known quotes and consider a diverse range of cultural and historical sources to enrich the variety and inclusiveness of the selections. 
-Provide a brief explanation of why the chosen quote fits the situation described by the user.
-
-2.Feeling: {feeling}.
-3.Reason for the feeling: {reason}.
-4.Plan for the day: {plan}.
-5. Explain within 100 words in English.
+Correct the following sentence. 
+The output language should be English. 
+Here is the text: {text}
 """
 
 def init_page():
     st.set_page_config(
-        page_title="Word of the Day AI Agent",
-        page_icon="🧘"
+        page_title="Text Correction AI Agent",
+        page_icon="✍️"
     )
-    st.header("Word of the Day AI Agent🧘")
+    st.header("Text Correction AI Agent ✍️")
 
 
 def select_model(temperature=0):
@@ -62,15 +55,9 @@ def main():
     init_page()
     chain = init_chain()
     if chain:
-        feeling = st.selectbox(
-            "How are you feeling today?",
-            ("I want to be more motivated", "I'm feeling sad", "I'm angry", "I just want to relax today", "I feel excited", "I'm feeling anxious"),
-            key="feeling"
-        )
-        reason = st.text_input("What's the reason for this feeling?", key="reason")
-        plan = st.text_input("What's your plan for today?", key="plan")
-        if st.button("Submit"):
-            result = chain.stream({"feeling": feeling, "reason": reason, "plan": plan})
+        text = st.text_area("Enter your English text here:", key="text")
+        if st.button("Generate Text"):
+            result = chain.stream({"text": text})
             st.write(result)   
       
 

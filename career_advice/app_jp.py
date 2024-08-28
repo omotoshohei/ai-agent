@@ -30,8 +30,8 @@ PROMPT = """
 """
 
 def init_page():
-    st.set_page_config(page_title="キャリアアドバイスツール", page_icon="🧘")
-    st.header("キャリアアドバイスツール🧘")
+    st.set_page_config(page_title="キャリアアドバイスAIエージェント", page_icon="🧘")
+    st.header("キャリアアドバイスAIエージェント🧘")
 
 
 def select_model(temperature=0):

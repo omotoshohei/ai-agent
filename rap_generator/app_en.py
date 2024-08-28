@@ -17,24 +17,24 @@ except ImportError:
 
 
 PROMPT = """
-1. Task: Generate a unique motivational or reflective quote that relates directly to the user's reported feeling and plan for the day. 
-1-1.Ensure the quote is relevant and offers either support or inspiration based on the specific emotional context provided. 
-1-2.Avoid repeating any quotes, and do not use quotes by Steve Jobs. 
-1-3.Seek out lesser-known quotes and consider a diverse range of cultural and historical sources to enrich the variety and inclusiveness of the selections. 
-Provide a brief explanation of why the chosen quote fits the situation described by the user.
-
-2.Feeling: {feeling}.
-3.Reason for the feeling: {reason}.
-4.Plan for the day: {plan}.
-5. Explain within 100 words in English.
+Generate a rap that strictly adheres to the following structure to ensure completeness and coherence:
+- Length: Exactly 8 lines, each line containing 8 beats.
+- Rhyme Scheme: Use an ABAB rhyme scheme throughout to maintain a rhythmic and lyrical flow.
+- Content: Reflect the given topic, occupation, and personal message in the lyrics. The rap should start with an introduction to the theme, follow with the body that develops the idea, and conclude with a strong ending.
+- Style: Incorporate internal rhymes and multisyllabic rhymes to enhance the lyrical complexity.
+- Tone: Align the tone with the sentiment of the personal message, ranging from motivational to contemplative, depending on the input.
+Ensure each line transitions smoothly to the next, maintaining thematic and rhythmic continuity. The rap must complete all 8 lines to provide a full narrative arc.
+- Topic:{topic},
+- Occupation:{occupation},
+- Personal Message:{message}
 """
 
 def init_page():
     st.set_page_config(
-        page_title="Word of the Day AI Agent",
-        page_icon="🧘"
+        page_title="Rap Generator AI Agent",
+        page_icon="🎶"
     )
-    st.header("Word of the Day AI Agent🧘")
+    st.header("Rap Generator AI Agent 🎶")
 
 
 def select_model(temperature=0):
@@ -62,15 +62,11 @@ def main():
     init_page()
     chain = init_chain()
     if chain:
-        feeling = st.selectbox(
-            "How are you feeling today?",
-            ("I want to be more motivated", "I'm feeling sad", "I'm angry", "I just want to relax today", "I feel excited", "I'm feeling anxious"),
-            key="feeling"
-        )
-        reason = st.text_input("What's the reason for this feeling?", key="reason")
-        plan = st.text_input("What's your plan for today?", key="plan")
-        if st.button("Submit"):
-            result = chain.stream({"feeling": feeling, "reason": reason, "plan": plan})
+        topic = st.text_input("Topic (e.g., Sunday)", key="topic")
+        occupation = st.text_input("Your Occupation (e.g., Data Scientist)", key="occupation")
+        message = st.text_input("What do you want to say? (e.g., prepare for tomorrow)", key="message")
+        if st.button("返信を生成する"):
+            result = chain.stream({"topic": topic, "occupation": occupation, "message": message})
             st.write(result)   
       
 

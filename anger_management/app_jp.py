@@ -26,8 +26,8 @@ PROMPT = """
 """
 
 def init_page():
-    st.set_page_config(page_title="アンガーマネジメントツール", page_icon="🧘")
-    st.header("アンガーマネジメントツール🧘")
+    st.set_page_config(page_title="アンガーマネジメント🧘AIエージェントナビ", page_icon="🧘")
+    st.header("アンガーマネジメント🧘AIエージェントナビ")
 
 def select_model(temperature=0):
     models = ("GPT-4o", "GPT-4o-mini", "Claude 3.5 Sonnet", "Gemini 1.5 Pro")

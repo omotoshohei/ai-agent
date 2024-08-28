@@ -29,10 +29,10 @@ You are an AI assistant specializing in anger management. Your task is to provid
 
 def init_page():
     st.set_page_config(
-        page_title="Anger Management Tool",
+        page_title="Anger Management - AI Agent Navi",
         page_icon="🧘"
     )
-    st.header("Anger Management Tool🧘")
+    st.header("Anger Management - AI Agent Navi🧘")
 
 
 def select_model(temperature=0):

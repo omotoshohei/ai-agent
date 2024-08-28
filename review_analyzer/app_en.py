@@ -17,24 +17,21 @@ except ImportError:
 
 
 PROMPT = """
-1. Task: Generate a unique motivational or reflective quote that relates directly to the user's reported feeling and plan for the day. 
-1-1.Ensure the quote is relevant and offers either support or inspiration based on the specific emotional context provided. 
-1-2.Avoid repeating any quotes, and do not use quotes by Steve Jobs. 
-1-3.Seek out lesser-known quotes and consider a diverse range of cultural and historical sources to enrich the variety and inclusiveness of the selections. 
-Provide a brief explanation of why the chosen quote fits the situation described by the user.
-
-2.Feeling: {feeling}.
-3.Reason for the feeling: {reason}.
-4.Plan for the day: {plan}.
-5. Explain within 100 words in English.
+## Task: Analyze customer reviews for our product, the 'Review Analyzer'. Focus on extracting key points that a potential buyer would find helpful. Include sentiment analysis to determine overall customer satisfaction.
+## Websites for Review: Please collect reviews from popular platforms like Facebook, Instagram, and other relevant forums based on the product's market presence.
+## Objective: The goal is to provide potential customers with a clear and concise summary of what current users think about the product. Highlight the most praised features, common issues, and general sentiment.
+## Additional: Summarize the analysis in about 200 words, indicating the sources of the reviews and the number of posts analyzed. Ensure the summary is straightforward and easy to understand, tailored to assist in making purchasing decisions.
+- Brand: {brand},
+- Product:{product},
+- Region: {region}
 """
 
 def init_page():
     st.set_page_config(
-        page_title="Word of the Day AI Agent",
-        page_icon="🧘"
+        page_title="Product Review Checker AI Agent",
+        page_icon="🔍"
     )
-    st.header("Word of the Day AI Agent🧘")
+    st.header("Product Review Checker AI Agent🔍")
 
 
 def select_model(temperature=0):
@@ -62,15 +59,11 @@ def main():
     init_page()
     chain = init_chain()
     if chain:
-        feeling = st.selectbox(
-            "How are you feeling today?",
-            ("I want to be more motivated", "I'm feeling sad", "I'm angry", "I just want to relax today", "I feel excited", "I'm feeling anxious"),
-            key="feeling"
-        )
-        reason = st.text_input("What's the reason for this feeling?", key="reason")
-        plan = st.text_input("What's your plan for today?", key="plan")
+        brand = st.text_input("Enter the brand name (e.g., Nike)", key="brand")
+        product = st.text_input("Enter the product name (e.g., Air Force One shoes)", key="product")
+        region = st.text_input("Enter your region (e.g., USA)", key="region", value="USA")
         if st.button("Submit"):
-            result = chain.stream({"feeling": feeling, "reason": reason, "plan": plan})
+            result = chain.stream({"brand": brand, "product": product, "region": region})
             st.write(result)   
       
 
